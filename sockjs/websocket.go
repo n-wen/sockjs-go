@@ -34,10 +34,14 @@ func (h *Handler) sockjsWebsocket(rw http.ResponseWriter, req *http.Request) {
 		for {
 			err := conn.ReadJSON(&d)
 			if err != nil {
+				fmt.Printf("readjson error: %v\n", err.Error())
+				fmt.Printf("d: %v\n", d)
 				close(readCloseCh)
 				return
 			}
 			if err := sess.accept(d...); err != nil {
+				fmt.Printf("sess.accept error: %v", err.Error())
+				fmt.Printf("d: %v\n", d)
 				close(readCloseCh)
 				return
 			}
